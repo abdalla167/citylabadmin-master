@@ -149,9 +149,6 @@ LinearLayout linearLayout;
                                            context.startActivity(intent);
                                         }
                                     }
-
-
-
                                     alertDialog.dismiss();
                                 }
                             });
@@ -167,19 +164,6 @@ LinearLayout linearLayout;
 
 
 
-//                    retrofitService.delete(reserv.get(getAdapterPosition()).getmReservationId()).enqueue(new Callback<SimpleResponse>() {
-//                        @Override
-//                        public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
-//
-//                           if (response.isSuccessful())
-//                            Log.d("TAG", "onResponse: +remove"+response.body().getMessage());
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<SimpleResponse> call, Throwable t) {
-//                            Log.d("TAG", "onResponse: +remove"+t.getMessage());
-//                        }
-//                    });
 
                     imageView_delete.setEnabled(false);
 
@@ -191,14 +175,13 @@ LinearLayout linearLayout;
                             {
                                 reserv.remove(getAdapterPosition());
                                 notifyItemRemoved(getAdapterPosition());
-                                Log.d("TAG", "onResponse:delte "+response.body().getMessage());
 
                             }
                         }
 
                         @Override
                         public void onFailure(Call<SimpleResponse> call, Throwable t) {
-                            Log.d("TAG", "onResponse:delte "+t.getMessage());
+
 
                         }
                     });

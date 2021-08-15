@@ -256,12 +256,10 @@ public class SendUserResultScreen extends BaseFragment
                 bytes.reset();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, bytes);
                 String sImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
-
                 //add image to adapter
                 //    inputStream = requireContext().getContentResolver().openInputStream(data.getData());
                 files.add(new FileData(bm, sImage));
                 adapter.addImage(files);
-
                 binding.ln2.setVisibility(View.GONE);
                 binding.uploadImageBtn.setText(getResources().getString(R.string.add));
 

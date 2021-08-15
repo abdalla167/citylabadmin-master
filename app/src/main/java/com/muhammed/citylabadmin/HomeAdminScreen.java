@@ -1,5 +1,6 @@
 package com.muhammed.citylabadmin;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -98,7 +99,13 @@ public class HomeAdminScreen extends Fragment {
 
 
 
+binding.uploadmedical.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+navController.navigate(R.id.action_homeAdminScreen_to_fragment_medical_information);
 
+    }
+});
 
         binding.sendOffersItem.setOnClickListener(new View.OnClickListener() {
             @Override

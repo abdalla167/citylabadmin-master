@@ -44,15 +44,12 @@ public class ReservationViewmodle extends ViewModel {
             public void onResponse(Call<Booking> call, Response<Booking> response) {
                 if (response.isSuccessful())
                 {
-                    Log.d("TAG", "onResponse:reservation "+response.body().getMessage());
-
                     allreservation.setValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<Booking> call, Throwable t) {
-                Log.d("TAG", "onResponse:error"+t.getMessage());
             }
         });
 

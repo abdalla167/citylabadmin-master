@@ -7,9 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
 
     <application
         android:name=".MyApplication"
@@ -19,12 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.CityLabAdmin"
-        android:usesCleartextTraffic="true"
-
-        >
-        <activity android:name=".MainActivity">
-
-        </activity>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".MedicalInformation"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".SplashScreen"
             android:windowSoftInputMode="adjustPan">
@@ -34,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <service
             android:name=".MyFirebaseMessagingService"
@@ -46,8 +41,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/logocitylab"
-            />
+            android:resource="@drawable/logocitylab" />
     </application>
 
 </manifest>

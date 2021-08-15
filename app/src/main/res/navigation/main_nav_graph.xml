@@ -27,6 +27,10 @@
             android:id="@+id/action_homeAdminScreen_to_reservationScreen"
             app:destination="@id/reservationScreen"
             />
+        <action
+            android:id="@+id/action_homeAdminScreen_to_fragment_medical_information"
+            app:destination="@id/fragment_medical_information" />
+
     </fragment>
 
     <fragment
@@ -34,6 +38,12 @@
         android:name="com.muhammed.citylabadmin.ui.result.SendUserResultScreen"
         android:label="fragment_send_user_result_screen"
         tools:layout="@layout/fragment_send_user_result_screen" />
+
+    <fragment
+        android:id="@+id/fragment_medical_information"
+        android:name="com.muhammed.citylabadmin.MedicalInformationFragment"
+        android:label="fragment_medical_information"
+        tools:layout="@layout/fragment_medical_information" />
     <fragment
         android:id="@+id/uploadOfferScreen"
         android:name="com.muhammed.citylabadmin.ui.offer.UploadOfferScreen"
