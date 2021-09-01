@@ -2,16 +2,17 @@
   <library name="Gradle: androidx.activity:activity:1.2.0@aar">
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cc3ededa82d0b9f3ce5a2f0892b6467d/jetified-activity-1.2.0/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/4c37b9d9f3dcb108e0435a0d271db4e8/jetified-activity-1.2.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0454ead6e558b3ef64a5764a308931e1/jetified-activity-1.2.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cc3ededa82d0b9f3ce5a2f0892b6467d/jetified-activity-1.2.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cc3ededa82d0b9f3ce5a2f0892b6467d/jetified-activity-1.2.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cc3ededa82d0b9f3ce5a2f0892b6467d/jetified-activity-1.2.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/cc3ededa82d0b9f3ce5a2f0892b6467d/jetified-activity-1.2.0/res" />
-      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/4c37b9d9f3dcb108e0435a0d271db4e8/jetified-activity-1.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/4c37b9d9f3dcb108e0435a0d271db4e8/jetified-activity-1.2.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/4c37b9d9f3dcb108e0435a0d271db4e8/jetified-activity-1.2.0/res" />
+      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0454ead6e558b3ef64a5764a308931e1/jetified-activity-1.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0454ead6e558b3ef64a5764a308931e1/jetified-activity-1.2.0/res" />
+      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0454ead6e558b3ef64a5764a308931e1/jetified-activity-1.2.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

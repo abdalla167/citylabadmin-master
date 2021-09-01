@@ -1,5 +1,7 @@
 package com.muhammed.citylabadmin.service;
 
+import com.muhammed.citylabadmin.data.model.AllOffer;
+import com.muhammed.citylabadmin.data.model.Datum;
 import com.muhammed.citylabadmin.data.model.login.LoginResponse;
 import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
 import com.muhammed.citylabadmin.data.model.login.UserData;
@@ -24,6 +26,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -34,6 +37,8 @@ public interface RetrofitService {
     @POST("api/Users/Login")
     Single<LoginResponse> userLogin(@Field("PhoneNumber") String phone,
                                     @Field("deviceToken") String token);
+
+
 
 
     @FormUrlEncoded
@@ -82,9 +87,36 @@ public interface RetrofitService {
             @Header("Authorization") String token,
             @Path("id") int id);
 
+    @DELETE("api/offers/{id}")
+    @Headers("Accept:application/json")
+    Call<SimpleResponse> delete_offer(
+            @Header("Authorization") String token,
+            @Path("id") int id);
+
     @GET("api/Reservations/all")
     @Headers("Accept:application/json")
     Call<Booking> getAllReservation();
+
+    @GET("api/offers/all")
+    public Call<AllOffer>offers();
+
+    @FormUrlEncoded
+    @PUT("api/offers/{id}")
+    @Headers("Accept:application/json")
+      Call<SimpleResponse>updateOffer(
+            @Field("Files")String image,
+            @Field("title") String title,
+            @Field("description") String desc,
+            @Field("StartTime") String sDate,
+            @Field("EndTime") String eDate,
+            @Field("PreviousPrice") Double oldPrice,
+            @Field("CurrentPrice") Double newPrice,
+            @Header("Authorization") String token,
+            @Path("id") int id
+
+    );
+
+
 
     @GET("api/users/all")
     @Headers("Accept:application/json")

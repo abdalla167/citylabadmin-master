@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.Space;
 
 import com.muhammed.citylabadmin.databinding.FragmentHomeAdminScreenBinding;
 import com.muhammed.citylabadmin.databinding.FragmentLoginScreenBinding;
@@ -102,7 +103,7 @@ public class HomeAdminScreen extends Fragment {
 binding.uploadmedical.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-navController.navigate(R.id.action_homeAdminScreen_to_fragment_medical_information);
+        navController.navigate(R.id.action_homeAdminScreen_to_fragment_medical_information);
 
     }
 });
@@ -110,6 +111,7 @@ navController.navigate(R.id.action_homeAdminScreen_to_fragment_medical_informati
         binding.sendOffersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SplashScreen.stat=0;
                 navController.navigate(R.id.action_homeAdminScreen_to_uploadOfferScreen);
 
             }
@@ -137,7 +139,12 @@ navController.navigate(R.id.action_homeAdminScreen_to_fragment_medical_informati
                 navController.navigate(R.id.action_homeAdminScreen_to_addUserFragment);
             }
         });
-
+binding.updateOffer.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+navController.navigate(R.id.action_homeAdminScreen_to_updateOfferScreen);
+    }
+});
 
         binding.showUsersItem.setOnClickListener(new View.OnClickListener() {
             @Override

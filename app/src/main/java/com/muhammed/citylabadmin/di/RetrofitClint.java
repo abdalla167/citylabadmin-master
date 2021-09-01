@@ -1,5 +1,7 @@
 package com.muhammed.citylabadmin.di;
 
+import com.muhammed.citylabadmin.data.model.AllOffer;
+import com.muhammed.citylabadmin.data.model.Datum;
 import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
 import com.muhammed.citylabadmin.service.RetrofitService;
 
@@ -34,4 +36,15 @@ public class RetrofitClint {
     {
         return apiApi.delete("Bearer "+token,id);
     }
+    public  Call<SimpleResponse> delete_offer(String token, int id)
+    {
+        return  apiApi.delete_offer("Bearer "+token,id);
+    }
+    public  Call<SimpleResponse>updateOffer(String token, int id,String image,String title,String desc, String sDate, String eDate ,Double oldPrice , Double newPrice )
+    {
+        return apiApi.updateOffer(image,title,desc,sDate,eDate,oldPrice,newPrice,"Bearer "+token,id);
+
+    }
+
+
 }

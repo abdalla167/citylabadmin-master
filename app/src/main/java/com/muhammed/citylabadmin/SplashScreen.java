@@ -19,7 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashScreen extends AppCompatActivity {
-
+    public static int stat=0;
     private static int SPLASH_SCREEN_TIME_OUT = 3000;
 
     @Override

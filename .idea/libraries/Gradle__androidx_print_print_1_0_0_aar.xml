@@ -2,16 +2,17 @@
   <library name="Gradle: androidx.print:print:1.0.0@aar">
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ad9c5b7aefb07abed9f69263381a9e2c/print-1.0.0/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/75cc9410875a020b95c6adfdd7b492ca/print-1.0.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/ae4a96aabc3f1010b35a7b2e57a94b18/print-1.0.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ad9c5b7aefb07abed9f69263381a9e2c/print-1.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ad9c5b7aefb07abed9f69263381a9e2c/print-1.0.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ad9c5b7aefb07abed9f69263381a9e2c/print-1.0.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/ad9c5b7aefb07abed9f69263381a9e2c/print-1.0.0/res" />
-      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/75cc9410875a020b95c6adfdd7b492ca/print-1.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/75cc9410875a020b95c6adfdd7b492ca/print-1.0.0/res" />
-      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/75cc9410875a020b95c6adfdd7b492ca/print-1.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/ae4a96aabc3f1010b35a7b2e57a94b18/print-1.0.0/res" />
+      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/ae4a96aabc3f1010b35a7b2e57a94b18/print-1.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/ae4a96aabc3f1010b35a7b2e57a94b18/print-1.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

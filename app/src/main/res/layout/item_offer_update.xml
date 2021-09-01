@@ -9,6 +9,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_id_updat_offer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_80sdp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,37 +20,54 @@
         android:layout_margin="@dimen/_10ssp"
         android:backgroundTint="#F7F7F8"
         >
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/updata_offer"
+                android:layout_width="@dimen/_50sdp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_send_offers"
+                android:background="@drawable/shapbutton"
+                android:fontFamily="@font/cairo_semibold"
+                android:text="تعديل"
+                android:textSize="@dimen/_8ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.056"
+                app:layout_constraintHorizontal_bias="0.049"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.511" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/delet_offer"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shapbutton"
+                android:fontFamily="@font/cairo_semibold"
+                android:text="مسح"
+                android:textSize="@dimen/_8sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.045"
+                app:layout_constraintStart_toEndOf="@+id/updata_offer"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/titel_offer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo_semibold"
                 android:text="new offer"
+                android:textColor="@color/dark_blue"
                 android:textDirection="rtl"
                 android:textSize="@dimen/_11ssp"
-                android:textColor="@color/dark_blue"
-                android:fontFamily="@font/cairo_semibold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.922"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintHorizontal_bias="0.851"
+                app:layout_constraintStart_toEndOf="@+id/delet_offer"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.505" />
+                app:layout_constraintVertical_bias="0.506" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

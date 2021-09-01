@@ -145,7 +145,7 @@ public class UsersScreen extends Fragment implements UserClickListener {
 
                 switch (networkState.status) {
                     case SUCCESS:
-                            adapter.addUsers((List<User>) networkState.data);
+                        adapter.addUsers((List<User>) networkState.data);
                         all_user=(List<User>) networkState.data;
                         LoadingDialog.hideDialog();
                         break;

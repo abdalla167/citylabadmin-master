@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,15 +25,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.muhammed.citylabadmin.R;
+import com.muhammed.citylabadmin.SplashScreen;
 import com.muhammed.citylabadmin.base.BaseFragment;
+import com.muhammed.citylabadmin.data.model.Datum;
+import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
 import com.muhammed.citylabadmin.databinding.FragmentLoginScreenBinding;
 import com.muhammed.citylabadmin.databinding.FragmentUploadOfferScreenBinding;
+import com.muhammed.citylabadmin.di.RetrofitClint;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
+import com.muhammed.citylabadmin.helper.MyPreference;
 import com.muhammed.citylabadmin.helper.NetworkState;
+import com.muhammed.citylabadmin.helper.Utile;
 import com.muhammed.citylabadmin.ui.login.LoginViewModel;
 
 import java.io.ByteArrayOutputStream;
@@ -41,15 +52,22 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 @AndroidEntryPoint
@@ -59,17 +77,18 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
     private FragmentUploadOfferScreenBinding binding;
 
     private String imageBase64;
-
+    public Datum datum=new Datum();
     InputStream inputStream;
     ByteArrayOutputStream bytes;
-
-
+    String startDateOfferUpdate;
+    String endDateOfferUpdate;
     final Calendar myCalendar = Calendar.getInstance();
     private Date startOfferDate;
     private Date endOfferDate;
 
     DatePickerDialog.OnDateSetListener startDateSetListener;
     DatePickerDialog.OnDateSetListener endDateSetListener;
+
 
 
     private SimpleDateFormat getDateFromString(String date) {
@@ -92,11 +111,9 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                 binding.startOfferDate.setText(sOffDate);
             }
         };
-
         endDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
                 month += 1;
                 eOffDate = dayOfMonth + "/" + month + "/" + year;
                 binding.endOfferDate.setText(eOffDate);
@@ -113,7 +130,11 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle args = getArguments();
+        if (args != null) {
+            String personJsonString = args.getString("object_offer");
+            datum= Utile.getGsonParser().fromJson(personJsonString, Datum.class);
+        }
 
     }
 
@@ -132,6 +153,43 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
 
         viewModel = new ViewModelProvider(this).get(OfferViewModel.class);
         initDateDialog();
+        if(SplashScreen.stat==1) {
+            binding.offerTitle.setText(datum.getTitle());
+            binding.offerNote.setText(datum.getDescription());
+            binding.startOfferDate.setText(datum.getStartTime().toString().split(" ")[0]);
+            binding.endOfferDate.setText(datum.getEndTime().split(" ")[0]);
+            binding.newOfferPrice.setText(datum.getCurrentPrice().toString());
+            binding.oldOfferPrice.setText(datum.getPreviousPrice().toString());
+
+            Glide.with(this)
+                    .asBitmap()
+                    .load("http://"+datum.getFiles().get(0))
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            binding.offerImage.setImageBitmap(resource);
+
+
+                            if (bytes == null)
+                                bytes = new ByteArrayOutputStream();
+                            bytes.reset();
+
+                            resource.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+                            imageBase64 = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
+
+                            binding.offerImage.setImageBitmap(resource);
+
+
+                        }
+
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                        }
+                    });
+
+
+            binding.removeIcon.setVisibility(View.VISIBLE);
+        }
 
         DateFormat dffrom = new SimpleDateFormat("M/dd/yyyy");
         DateFormat dfto = new SimpleDateFormat("yyyy-MM-dd");
@@ -153,8 +211,6 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
-
-
                 DatePickerDialog dialog = new DatePickerDialog(
                         requireContext(),
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -202,11 +258,11 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                 if (bytes == null) {
                     try {
                         if (inputStream != null)
-                            uploadOfferData(getBytes(inputStream));
+                            uploadOfferData(getBytes(inputStream), SplashScreen.stat);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else uploadOfferData(bytes.toByteArray());
+                } else uploadOfferData(bytes.toByteArray(),SplashScreen.stat);
             }
         });
 
@@ -347,6 +403,8 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
         }
     }
 
+
+
     private void onCaptureImageResult(Intent data) {
         if (data != null) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
@@ -378,32 +436,78 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
     }
 
 
-    private void uploadOfferData(byte[] imageBytes) {
-        String title = Objects.requireNonNull(binding.offerTitle.getText()).toString().trim();
-        String startDate = sOffDate;
-        String endDate = eOffDate;
-        String startPrice = Objects.requireNonNull(binding.oldOfferPrice.getText()).toString().trim();
-        String endPrice = Objects.requireNonNull(binding.newOfferPrice.getText()).toString().trim();
-        String desc = Objects.requireNonNull(binding.offerNote.getText()).toString().trim();
+    private void uploadOfferData(byte[] imageBytes,int stat) {
 
-        if (title.isEmpty() || startDate.isEmpty() || endDate.isEmpty() ||
-                startPrice.isEmpty() || endPrice.isEmpty() || desc.isEmpty()) {
-            showToast("ادخل البيانات كاملة");
-            return;
-        }
 
-        if (imageBase64 == null) {
-            showToast("يجب اختيار صورة");
-          if(  Double.parseDouble(startPrice) >   Double.parseDouble(endPrice))
-          {
-              showToast("خطاء في الاسعار");
-          }
-        } else {
 
-            viewModel.addOffer(imageBase64, title, desc, startDate, endDate,
-                    Double.parseDouble(startPrice), Double.parseDouble(endPrice));
+            String title = Objects.requireNonNull(binding.offerTitle.getText()).toString().trim();
+            String startDate = sOffDate;
+            String endDate = eOffDate;
+            String startPrice = Objects.requireNonNull(binding.oldOfferPrice.getText()).toString().trim();
+            String endPrice = Objects.requireNonNull(binding.newOfferPrice.getText()).toString().trim();
+            String desc = Objects.requireNonNull(binding.offerNote.getText()).toString().trim();
+            ///////////////////////////////
 
-        }
+            if(stat==0) {
+
+                if (title.isEmpty() || startDate.isEmpty() || endDate.isEmpty() ||
+                        startPrice.isEmpty() || endPrice.isEmpty() || desc.isEmpty()) {
+                    showToast("ادخل البيانات كاملة");
+                    return;
+                }
+            }
+
+            if (imageBase64 == null) {
+                showToast("يجب اختيار صورة");
+                if (Double.parseDouble(startPrice) > Double.parseDouble(endPrice)) {
+                    showToast("خطاء في الاسعار");
+                }
+            } else {
+
+                if(stat==1)
+                {
+                    binding.progressupload.setVisibility(View.VISIBLE);
+                    datum.setTitle( Objects.requireNonNull(binding.offerTitle.getText()).toString().trim());
+                    if(!sOffDate.equals(""))
+                    {
+                        datum.setStartTime(sOffDate);
+                    }
+                    if (!eOffDate.equals(""))
+                    {
+                        datum.setEndTime(eOffDate);
+                    }
+                    datum.setPreviousPrice(Long.valueOf(Objects.requireNonNull(binding.oldOfferPrice.getText()).toString().trim()));
+                    datum.setCurrentPrice(Long.valueOf(Objects.requireNonNull(binding.newOfferPrice.getText()).toString().trim()));
+                    datum.setDescription(Objects.requireNonNull(binding.offerNote.getText()).toString().trim());
+                    List<String>file=new ArrayList<>();
+                    file.add(imageBase64);
+                    datum.setFiles(file);
+
+
+
+                    RetrofitClint.getInstance().
+                            updateOffer(MyPreference.getSharedString(MyPreference.SHARED_USER_TOKEN),Integer.parseInt(String.valueOf(datum.getOfferId())),
+                                    imageBase64,datum.getTitle(),datum.getDescription(),datum.getStartTime().split(" ")[0].toString(),datum.getEndTime().split(" ")[0],Double.parseDouble(String.valueOf(datum.getPreviousPrice())) ,Double.parseDouble(String.valueOf(datum.getCurrentPrice()))).
+                            enqueue(new Callback<SimpleResponse>() {
+                        @Override
+                        public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
+                            Log.d("TAG", "onResponse "+response.body().getMessage());
+                            binding.progressupload.setVisibility(View.GONE);
+
+                        }
+                        @Override
+                        public void onFailure(Call<SimpleResponse> call, Throwable t) {
+                            Log.d("TAG", "onResponse+up: "+t.getMessage());
+                            binding.progressupload.setVisibility(View.GONE);
+                        }
+                    });
+                }
+                else {
+                    SplashScreen.stat=0;
+                    viewModel.addOffer(imageBase64, title, desc, startDate, endDate,
+                            Double.parseDouble(startPrice), Double.parseDouble(endPrice));
+                }
+            }
 
 
     }

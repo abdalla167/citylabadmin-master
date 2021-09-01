@@ -9,6 +9,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Utile {
 
 
@@ -22,5 +25,14 @@ public class Utile {
                     InputMethodManager.HIDE_NOT_ALWAYS
             );
         }
+    }
+    private static Gson gson;
+
+    public static Gson getGsonParser() {
+        if(null == gson) {
+            GsonBuilder builder = new GsonBuilder();
+            gson = builder.create();
+        }
+        return gson;
     }
 }

@@ -77,6 +77,8 @@ public class ReservationScreen extends Fragment {
         return inflater.inflate(R.layout.fragment_reservation_screen, container, false);
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,7 +92,9 @@ public class ReservationScreen extends Fragment {
             @Override
             public void onChanged(Booking booking) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                adapter.addreserv(booking.getData());
+                List<Datum>data=new ArrayList<>();
+                data=booking.getData().subList(7,booking.getData().size());
+                adapter.addreserv(data);
                 recyclerView.setAdapter(adapter);
             }
         });

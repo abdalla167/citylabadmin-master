@@ -3,6 +3,7 @@ package com.muhammed.citylabadmin.ui.adapter.resvrvation;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +13,10 @@ import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +53,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter.ReservationHolder> {
-
+    float scaletr=1.0f;
+    ScaleGestureDetector saScaleGestureDetector;
+    ImageView imaged;
  Context context;
     RetrofitService retrofitService;
      List<Datum> reserv = new ArrayList<>();
@@ -109,7 +115,7 @@ public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter
 
             ImageView image_test,imageView_delete;
             TextView name,age,phone,date,address,type;
-LinearLayout linearLayout;
+ConstraintLayout linearLayout;
         public ReservationHolder(@NonNull View itemView) {
                 super(itemView);
                 linearLayout=itemView.findViewById(R.id.number_call);
@@ -121,6 +127,23 @@ LinearLayout linearLayout;
                 address=itemView.findViewById(R.id.address_id_user_reservation);
                 type=itemView.findViewById(R.id.type_id_user_reservation);
             imageView_delete=itemView.findViewById(R.id.remove_icon_reservation);
+            image_test.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.custom_image_reservation);
+                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                    imaged =dialog.findViewById(R.id.image_show_reservation);
+
+// Include dialog.xml file
+                    dialog.show();      // Include dialog.xml file
+                    Glide.with(context).load("http://"+reserv.get(getAdapterPosition()).getmFile())
+                            .into(imaged);
+
+
+
+                }
+            });
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -196,4 +219,17 @@ LinearLayout linearLayout;
             });
         }
     }
+
+    private class Scallister extends ScaleGestureDetector.SimpleOnScaleGestureListener
+    {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaletr*=saScaleGestureDetector.getScaleFactor();
+            imaged.setScaleX(scaletr);
+            imaged.setScaleY(scaletr);
+            return true;
+        }
+
+    }
+
 }
