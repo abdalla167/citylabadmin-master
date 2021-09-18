@@ -109,6 +109,7 @@ public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter
                 holder.dowenload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(context, "يتم بداء التحميل الان", Toast.LENGTH_SHORT).show();
                         @SuppressLint({"NewApi", "LocalSuppress"}) DownloadManager.Request request = new DownloadManager.Request(Uri.parse("http://" + reserv.get(position).getmFile()));
                         request.setTitle("resevation");
                         request.setDescription("تحميل الملف برجاء الانتظار .......");
