@@ -14,6 +14,8 @@
         android:layout_height="250dp"
         android:orientation="vertical"
         >
+
+
         <ImageView
             android:id="@+id/image_id_item_resevation"
             android:layout_width="@dimen/_50sdp"
@@ -34,10 +36,27 @@
                 android:layout_marginVertical="@dimen/_3sdp"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:src="@drawable/ic_remove"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.019"
+                app:layout_constraintHorizontal_bias="0.044"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/offer_image" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.063" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/downloadImage"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:backgroundTint="#4C66ED"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:src="@drawable/ic_baseline_arrow_circle_down_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.164"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.043" />
 
             <TextView
                 android:id="@+id/name_id_user_reservation"
@@ -74,15 +93,17 @@
                 android:id="@+id/age_id_user_reservation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:fontFamily="@font/cairo_semibold"
                 android:text="السن :22"
                 android:textColor="#000"
+                android:textDirection="rtl"
                 android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.306"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.467" />
 
             <TextView
                 android:id="@+id/day_id_user_reservation"
@@ -93,10 +114,12 @@
                 android:text="اليوم الثلاثاء"
                 android:textColor="#000"
                 android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toStartOf="@+id/phone_user_reservation"
-                app:layout_constraintHorizontal_bias="0.379"
+                app:layout_constraintHorizontal_bias="0.383"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/age_id_user_reservation" />
+                app:layout_constraintTop_toBottomOf="@+id/age_id_user_reservation"
+                app:layout_constraintVertical_bias="0.319" />
 
             <TextView
                 android:id="@+id/type_id_user_reservation"

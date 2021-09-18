@@ -1,15 +1,18 @@
 package com.muhammed.citylabadmin.ui.adapter.resvrvation;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.CookieManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,7 +88,7 @@ public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter
 
             holder.name.setText(reserv.get(position).getmName());
             holder.phone.setText(reserv.get(position).getmPhoneNumber());
-            holder.age.setText(reserv.get(position).getmAge());
+            holder.age.setText("الفرع : "+reserv.get(position).getmAge());
             holder.date.setText(reserv.get(position).getmReservationDate().split(" ")[0]);
             if (reserv.get(position).getmType() == 1) {
                 holder.type.setText("حجز منزلي");
@@ -95,11 +99,28 @@ public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter
                 {    holder.address.setText(reserv.get(position).getmAddress().toString() + "\n" + reserv.get(position).getmBuildingNo().toString());
             }
             }
-
-            Glide.with(context).load("http://"+ reserv.get(position).getmFile())
-                    .into(holder.image_test);
-            Log.d("TAG", "onBindViewHolder: "+reserv.get(position).getmFile());
-
+            if(reserv.get(position).getmFile().equals(""))
+            {
+                holder.image_test.setImageResource(R.drawable.defult);
+            }
+            else {
+                Glide.with(context).load("http://" + reserv.get(position).getmFile())
+                        .into(holder.image_test);
+                holder.dowenload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        @SuppressLint({"NewApi", "LocalSuppress"}) DownloadManager.Request request = new DownloadManager.Request(Uri.parse("http://" + reserv.get(position).getmFile()));
+                        request.setTitle("resevation");
+                        request.setDescription("تحميل الملف برجاء الانتظار .......");
+                        String cookie = CookieManager.getInstance().getCookie("http://" + reserv.get(position).getmFile());
+                        request.addRequestHeader("cookie", cookie);
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,".png");
+                        DownloadManager downloadManager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
+                        downloadManager.enqueue(request);
+                    }
+                });
+            }
         }
     }
 
@@ -113,7 +134,7 @@ public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter
 
     public  class ReservationHolder extends RecyclerView.ViewHolder {
 
-            ImageView image_test,imageView_delete;
+            ImageView image_test,imageView_delete,dowenload;
             TextView name,age,phone,date,address,type;
 ConstraintLayout linearLayout;
         public ReservationHolder(@NonNull View itemView) {
@@ -126,6 +147,7 @@ ConstraintLayout linearLayout;
                 date=itemView.findViewById(R.id.day_id_user_reservation);
                 address=itemView.findViewById(R.id.address_id_user_reservation);
                 type=itemView.findViewById(R.id.type_id_user_reservation);
+                dowenload=itemView.findViewById(R.id.downloadImage);
             imageView_delete=itemView.findViewById(R.id.remove_icon_reservation);
             image_test.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,6 +166,10 @@ ConstraintLayout linearLayout;
 
                 }
             });
+
+
+
+
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
