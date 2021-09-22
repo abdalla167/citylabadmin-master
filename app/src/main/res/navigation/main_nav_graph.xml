@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_homeAdminScreen_to_updateOfferScreen"
             app:destination="@id/updateOfferScreen" />
+        <action
+            android:id="@+id/action_homeAdminScreen_to_showalllocation"
+            app:destination="@id/showalllocation" />
 
 
     </fragment>
@@ -43,6 +46,23 @@
         android:name="com.muhammed.citylabadmin.ui.result.SendUserResultScreen"
         android:label="fragment_send_user_result_screen"
         tools:layout="@layout/fragment_send_user_result_screen" />
+
+
+    <fragment
+        android:id="@+id/showalllocation"
+        android:name="com.muhammed.citylabadmin.ui.addnewlocation.ShowAllLocation"
+        android:label="fragment_showalllocation_screen"
+        tools:layout="@layout/fragment_show_all_location" >
+        <action
+            android:id="@+id/action_showalllocation_to_uploadlocation"
+            app:destination="@id/uploadlocation" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/uploadlocation"
+        android:name="com.muhammed.citylabadmin.ui.addnewlocation.Uploadnewlocation"
+        android:label="fragemnt_upload_new_loaction"
+        tools:layout="@layout/fragment_uploadnewlocation" />
 
     <fragment
         android:id="@+id/fragment_medical_information"

@@ -152,5 +152,13 @@ navController.navigate(R.id.action_homeAdminScreen_to_updateOfferScreen);
                 navController.navigate(R.id.action_homeAdminScreen_to_usersScreen);
             }
         });
+
+        binding.uploadLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeAdminScreen_to_showalllocation);
+
+            }
+        });
     }
 }

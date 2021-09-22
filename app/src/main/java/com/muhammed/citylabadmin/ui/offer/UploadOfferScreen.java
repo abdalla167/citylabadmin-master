@@ -12,9 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
@@ -25,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -35,16 +32,14 @@ import com.bumptech.glide.request.transition.Transition;
 import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.SplashScreen;
 import com.muhammed.citylabadmin.base.BaseFragment;
-import com.muhammed.citylabadmin.data.model.Datum;
+import com.muhammed.citylabadmin.data.model.offer.Datum;
 import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
-import com.muhammed.citylabadmin.databinding.FragmentLoginScreenBinding;
 import com.muhammed.citylabadmin.databinding.FragmentUploadOfferScreenBinding;
 import com.muhammed.citylabadmin.di.RetrofitClint;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.MyPreference;
 import com.muhammed.citylabadmin.helper.NetworkState;
 import com.muhammed.citylabadmin.helper.Utile;
-import com.muhammed.citylabadmin.ui.login.LoginViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -52,14 +47,12 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.TimeZone;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import okhttp3.MediaType;

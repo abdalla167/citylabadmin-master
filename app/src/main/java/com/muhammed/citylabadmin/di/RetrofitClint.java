@@ -1,7 +1,5 @@
 package com.muhammed.citylabadmin.di;
 
-import com.muhammed.citylabadmin.data.model.AllOffer;
-import com.muhammed.citylabadmin.data.model.Datum;
 import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
 import com.muhammed.citylabadmin.service.RetrofitService;
 

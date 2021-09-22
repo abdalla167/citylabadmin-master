@@ -5,7 +5,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.muhammed.citylabadmin.data.model.AllOffer;
+import com.muhammed.citylabadmin.data.model.offer.AllOffer;
 import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
 import com.muhammed.citylabadmin.helper.NetworkState;
 import com.muhammed.citylabadmin.service.RetrofitService;
@@ -13,15 +13,12 @@ import com.muhammed.citylabadmin.service.RetrofitService;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.schedulers.SingleScheduler;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

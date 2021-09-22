@@ -4,36 +4,23 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.SplashScreen;
-import com.muhammed.citylabadmin.data.model.AllOffer;
-import com.muhammed.citylabadmin.data.model.Datum;
-import com.muhammed.citylabadmin.data.model.user.User;
-import com.muhammed.citylabadmin.helper.LoadingDialog;
-import com.muhammed.citylabadmin.helper.NetworkState;
+import com.muhammed.citylabadmin.data.model.offer.AllOffer;
+import com.muhammed.citylabadmin.data.model.offer.Datum;
 import com.muhammed.citylabadmin.helper.Utile;
-import com.muhammed.citylabadmin.ui.adapter.OfferOnClick;
-import com.muhammed.citylabadmin.ui.adapter.OfferUpdata;
-import com.muhammed.citylabadmin.ui.adapter.user.UserAdapter;
-import com.muhammed.citylabadmin.ui.users.UserViewModel;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.muhammed.citylabadmin.ui.adapter.offer.OfferOnClick;
+import com.muhammed.citylabadmin.ui.adapter.offer.OfferUpdata;
 
 public class GetAllOfferFragemnt extends Fragment implements OfferOnClick {
 
