@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/deletlocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_remove"
@@ -31,29 +31,46 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.264" />
 
+
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/ocationprattner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cairo_semibold"
-                android:text="الموقع : شارع الصحافه"
+                android:text="الفرع :الحوامديه"
                 android:textColor="#2956F8"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.901"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/deletlocation"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.67" />
+                app:layout_constraintVertical_bias="0.195" />
+
+            <TextView
+                android:id="@+id/address_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo_semibold"
+                android:text="العنوان :الحوامديه"
+                android:textColor="#2956F8"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.925"
+                app:layout_constraintStart_toEndOf="@+id/deletlocation"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.835" />
 
             <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/markergreen"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.947"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/deletlocation"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.133" />
 

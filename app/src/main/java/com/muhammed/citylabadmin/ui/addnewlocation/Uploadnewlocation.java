@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -22,7 +24,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.muhammed.citylabadmin.R;
+import com.muhammed.citylabadmin.data.model.location.LocationModle;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,10 +40,12 @@ public class Uploadnewlocation extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     Geocoder geo;
-    EditText addresse;
+    EditText addresse,big_add;
     Button conferm,cancel;
     SupportMapFragment mapFragment;
-
+    ProgressBar progressBar;
+    DatabaseReference mDatabaseref;
+    FirebaseDatabase database;
     public Uploadnewlocation() {
         // Required empty public constructor
     }
@@ -54,7 +63,8 @@ public class Uploadnewlocation extends Fragment implements OnMapReadyCallback {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_uploadnewlocation, container, false);
 
-
+        database = FirebaseDatabase.getInstance();
+        mDatabaseref = database.getReference();
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapFragment.onCreate(savedInstanceState);
@@ -88,15 +98,45 @@ public class Uploadnewlocation extends Fragment implements OnMapReadyCallback {
 
 
                             dialog.show();
-
+                            progressBar=dialog.findViewById(R.id.prograssuploadloacation);
                             addresse= dialog.findViewById(R.id.editTextuploadloacation);
                             conferm=dialog.findViewById(R.id.conferuploadloacation);
                             cancel=dialog.findViewById(R.id.canseluploadloacation);
+                            big_add=dialog.findViewById(R.id.bigadd);
                             conferm.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
+                                    if (addresse.getText().toString().matches("") || big_add.getText().toString().matches(""))
+                                    {
+                                        Toast.makeText(getContext(), "برجاء ادخال البيانات", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    if (!(addresse.getText().toString().matches("") ) ||  !(big_add.getText().toString().matches(""))) {
+                                        progressBar.setVisibility(View.VISIBLE);
+                                        LocationModle locationModle = new LocationModle();
+                                        locationModle.setNamelabe(addresse.getText().toString());
+                                        locationModle.setLat(latLng.latitude + "");
+                                        locationModle.setLog(latLng.longitude + "");
+                                        locationModle.setBigadd(big_add.getText().toString());
+
+                                        mDatabaseref.child("location").push().setValue(locationModle).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    Toast.makeText(getContext(), "تم اضافة الموقع", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+
+
+                                    }
+                                    dialog.dismiss();
+
+                                    mMap.clear();
                                 }
+
                             });
                             cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -106,6 +146,7 @@ public class Uploadnewlocation extends Fragment implements OnMapReadyCallback {
                                     mMap.clear();
                                 }
                             });
+
 
                         }
                     } catch (IOException ex) {
@@ -124,6 +165,7 @@ public class Uploadnewlocation extends Fragment implements OnMapReadyCallback {
                     return false;
                 }
             });
+
         }
 
     }

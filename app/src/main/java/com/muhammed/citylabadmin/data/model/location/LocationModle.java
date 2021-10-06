@@ -3,6 +3,7 @@ package com.muhammed.citylabadmin.data.model.location;
 public class LocationModle
 {
     String namelabe;
+    String bigadd;
     String lat;
     String log;
 
@@ -10,10 +11,12 @@ public class LocationModle
     public LocationModle() {
     }
 
-    public LocationModle(String namelabe, String lat, String log) {
-        this.namelabe = namelabe;
-        this.lat = lat;
-        this.log = log;
+    public String getBigadd() {
+        return bigadd;
+    }
+
+    public void setBigadd(String bigadd) {
+        this.bigadd = bigadd;
     }
 
     public String getNamelabe() {
