@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.SplashScreen;
@@ -30,6 +31,7 @@ public class GetAllOfferFragemnt extends Fragment implements OfferOnClick {
      LinearLayoutManager layoutManager;
     OfferOnClick offerOnClick;
     ProgressBar progressBar;
+    TextView textView;
 
     public GetAllOfferFragemnt() {
         // Required empty public constructor
@@ -48,6 +50,7 @@ public class GetAllOfferFragemnt extends Fragment implements OfferOnClick {
         offerViewModel= ViewModelProviders.of(getActivity()).get(OfferViewModel.class);
         recyclerView=view.findViewById(R.id.recycler_id_offer);
         progressBar=view.findViewById(R.id.prograsgetoffer);
+        textView=view.findViewById(R.id.textnooffer);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         offerUpdata=new OfferUpdata(getContext(),this);
 
@@ -60,6 +63,11 @@ public class GetAllOfferFragemnt extends Fragment implements OfferOnClick {
                     layoutManager=new LinearLayoutManager(requireContext());
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(offerUpdata);
+                }
+                if(allOffer.getData().size()==0||allOffer.getData() ==null)
+                {
+                    recyclerView.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
                 }
                 progressBar.setVisibility(View.GONE);
             }

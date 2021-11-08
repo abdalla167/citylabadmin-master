@@ -27,5 +27,19 @@
             tools:layout_editor_absoluteX="-36dp"
             tools:layout_editor_absoluteY="0dp"
             tools:listitem="@layout/item_offer_update" />
+
+        <TextView
+            android:id="@+id/textnooffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_30sdp"
+            android:fontFamily="@font/cairo_semibold"
+            android:text="لا يوجد عروض حاليا"
+            android:visibility="gone"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_id_offer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.data.model.location.LocationModle;
@@ -32,6 +33,7 @@ public class ShowAllLocation extends Fragment {
     GetAllLocationViewModel getAllLocationViewModel;
     LinearLayoutManager layoutManager;
 LocationAdapter locationAdapter;
+ProgressBar progressBar;
     public ShowAllLocation() {
         // Required empty public constructor
     }
@@ -54,11 +56,12 @@ LocationAdapter locationAdapter;
             getAllLocationViewModel.getalllocation().observe(getViewLifecycleOwner(), new Observer<ArrayList<LocationModle>>() {
                         @Override
                         public void onChanged(ArrayList<LocationModle> locationModles) {
-locationAdapter=new LocationAdapter(getContext());
-locationAdapter.setlist(locationModles);
+                            locationAdapter=new LocationAdapter(getContext());
+                            locationAdapter.setlist(locationModles);
                             layoutManager=new LinearLayoutManager(requireContext());
                             recyclerViewShowAllLocation.setLayoutManager(layoutManager);
                             recyclerViewShowAllLocation.setAdapter(locationAdapter);
+                            progressBar.setVisibility(View.GONE);
 
 
                         }
@@ -79,6 +82,7 @@ locationAdapter.setlist(locationModles);
     public void intialzation(View view) {
         AddnewLocation = view.findViewById(R.id.add_new_location);
         recyclerViewShowAllLocation = view.findViewById(R.id.recycler_id_location);
+        progressBar=view.findViewById(R.id.progerlolcation);
 
     }
 

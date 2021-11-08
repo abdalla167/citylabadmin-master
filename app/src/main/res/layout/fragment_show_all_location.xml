@@ -16,6 +16,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_location"/>
 
+    <ProgressBar
+        android:id="@+id/progerlolcation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_id_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/recycler_id_location"
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminateDrawable="@drawable/progress_shape"
+        />
 
     <ImageView
         android:id="@+id/add_new_location"
