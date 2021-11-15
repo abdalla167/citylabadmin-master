@@ -28,7 +28,7 @@ public class NetworkState {
         if (throwable.equals(new SocketTimeoutException()))
             return new NetworkState(Status.FAILED, "Bad Connection", null);
         else
-            return new NetworkState(Status.FAILED, "Error", null);
+            return new NetworkState(Status.FAILED, "Error"+throwable.getMessage(), null);
 
     }
 

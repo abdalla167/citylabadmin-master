@@ -45,7 +45,10 @@ public class ReservationViewmodle extends ViewModel {
             public void onResponse(Call<Booking> call, Response<Booking> response) {
                 if (response.isSuccessful())
                 {
+                    if(response.body() !=null)
+                    {
                     allreservation.setValue(response.body());
+                }
                 }
             }
 

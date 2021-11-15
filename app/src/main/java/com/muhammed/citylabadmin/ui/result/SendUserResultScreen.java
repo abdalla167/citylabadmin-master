@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -28,13 +31,16 @@ import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.base.BaseFragment;
 import com.muhammed.citylabadmin.databinding.FragmentSendUserResultScreenBinding;
 import com.muhammed.citylabadmin.helper.FileData;
+import com.muhammed.citylabadmin.helper.ImageResizer;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.NetworkState;
 import com.muhammed.citylabadmin.ui.adapter.result.ResultFileClickListener;
 import com.muhammed.citylabadmin.ui.adapter.result.ResultImageAdapter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -249,7 +255,22 @@ public class SendUserResultScreen extends BaseFragment
     private void onSelectFromGalleryResult(Intent data) {
         Bitmap bm;
         if (data != null) {
+//            Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),
+//                   data.getData());
+//
+//            Bitmap bitmap = bitmapOrg;
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//            byte[] imageInByte = stream.toByteArray();
+//            long lengthbmp = imageInByte.length;
+
+
+            //
             try {
+
+
+
+
                 bm = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), data.getData());
                 if (bytes == null)
                     bytes = new ByteArrayOutputStream();
@@ -258,6 +279,9 @@ public class SendUserResultScreen extends BaseFragment
                 String sImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
                 //add image to adapter
                 //    inputStream = requireContext().getContentResolver().openInputStream(data.getData());
+                Log.d("TAG", ": "+bm.getWidth()+"  "+bm.getHeight());
+                bm= ImageResizer.reduceBitmapSize(bm,  100000 );
+                Log.d("TAG", "onSelectFromGalleryResult: "+bm.getWidth()+"  "+bm.getHeight());
                 files.add(new FileData(bm, sImage));
                 adapter.addImage(files);
                 binding.ln2.setVisibility(View.GONE);
@@ -267,6 +291,10 @@ public class SendUserResultScreen extends BaseFragment
                 e.printStackTrace();
             }
         }
+    }
+
+    private void getBitMapFile(Bitmap bm) {
+
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -280,6 +308,7 @@ public class SendUserResultScreen extends BaseFragment
             String sImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
 
             //add image to adapter
+
             files.add(new FileData(thumbnail, sImage));
             adapter.addImage(files);
 
@@ -306,6 +335,7 @@ public class SendUserResultScreen extends BaseFragment
                         LoadingDialog.hideDialog();
                         Toast.makeText(requireContext(), "" + networkState.message.toString(),
                                 Toast.LENGTH_SHORT).show();
+
                         break;
 
                     default:

@@ -100,8 +100,11 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month += 1;
-                    sOffDate = dayOfMonth + "/" + month + "/" + year;
-                binding.startOfferDate.setText(sOffDate);
+                binding.startOfferDate.setText(( dayOfMonth) + "/" + month + "/" + year);
+                 if (dayOfMonth>1)
+                     dayOfMonth=dayOfMonth-1;
+                    sOffDate =( dayOfMonth) + "/" + month + "/" + year;
+
             }
         };
         endDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -204,6 +207,8 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
+                Locale locale = getResources().getConfiguration().locale.ENGLISH;
+                Locale.setDefault(locale);
                 DatePickerDialog dialog = new DatePickerDialog(
                         requireContext(),
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -220,7 +225,8 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
-
+                Locale locale = getResources().getConfiguration().locale.ENGLISH;
+                Locale.setDefault(locale);
                 DatePickerDialog dialog = new DatePickerDialog(
                         requireContext(),
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -463,6 +469,7 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                     datum.setTitle( Objects.requireNonNull(binding.offerTitle.getText()).toString().trim());
                     if(!sOffDate.equals(""))
                     {
+
                         datum.setStartTime(sOffDate);
                     }
                     if (!eOffDate.equals(""))

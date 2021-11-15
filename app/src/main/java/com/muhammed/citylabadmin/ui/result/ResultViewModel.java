@@ -68,12 +68,15 @@ public class ResultViewModel extends ViewModel {
                             _sendResultLiveData.postValue(NetworkState.getErrorMessage(offerResponse.getMessage()));
                         else
                             _sendResultLiveData.postValue(NetworkState.getLoaded(offerResponse.getMessage()));
+
+                        Log.d("TAG", "onSuccess: "+offerResponse.getMessage());
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
 
                         _sendResultLiveData.postValue(NetworkState.getErrorMessage(e));
+                        Log.d("TAG", "onError: "+e);
 
 
                     }

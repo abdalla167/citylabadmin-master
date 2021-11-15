@@ -53,7 +53,7 @@ return new LocationAdapter.LocationAdapterHolder(view);
                 holder.imageView.setClickable(false);
 
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                Query applesQuery = ref.child("location").orderByChild("bigadd").equalTo(locationModles.get(position).getBigadd().toString());
+                Query applesQuery = ref.child("location").orderByChild("lat").equalTo(locationModles.get(position).getLat().toString());
 
                 applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -93,11 +93,6 @@ return new LocationAdapter.LocationAdapterHolder(view);
             imageView=itemView.findViewById(R.id.deletlocation);
             partnner=itemView.findViewById(R.id.ocationprattner);
             adderss=itemView.findViewById(R.id.address_location);
-
-
         }
-
-
-
     }
 }
