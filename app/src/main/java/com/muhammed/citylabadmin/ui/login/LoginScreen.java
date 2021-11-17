@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -25,8 +26,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.muhammed.citylabadmin.R;
+import com.muhammed.citylabadmin.data.model.admin.AdminModle;
 import com.muhammed.citylabadmin.data.model.login.UserData;
 import com.muhammed.citylabadmin.databinding.FragmentLoginScreenBinding;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
@@ -42,7 +50,7 @@ public class LoginScreen extends Fragment {
 
     private LoginViewModel viewModel;
     private FragmentLoginScreenBinding binding;
-
+    public NavController navController;
     private String phone = "";
 
     private String deviceToken ;
@@ -57,14 +65,18 @@ public class LoginScreen extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_screen, container, false);
+        View view=inflater.inflate(R.layout.fragment_login_screen, container, false);
+
+        return view;
     }
+
 
 
     @Override
@@ -72,7 +84,11 @@ public class LoginScreen extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentLoginScreenBinding.bind(view);
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-
+        if( !MyPreference.GetdataAdmin().getName().equals(""))
+        {
+            Log.d("TAG", "onViewCreated: "+MyPreference.GetdataAdmin().getName()+" "+MyPreference.GetdataAdmin().isAdmin_or_no());
+            Navigation.findNavController(requireView()).navigate(R.id.action_loginScreen_to_homeAdminScreen);
+        }
 
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         FirebaseMessaging.getInstance().getToken()
@@ -89,62 +105,71 @@ public class LoginScreen extends Fragment {
                     }
                 });
 
-        binding.loginUserPhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 11) {
-                    phone = s.toString();
-                    Utile.hideKeyboard(getActivity());
-                    binding.loginBtn.setEnabled(true);
-                }
-                else
-                    binding.loginBtn.setEnabled(false);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.userLogin(phone , deviceToken);
-            }
-        });
+                String name =binding.loginUserPhone.getText().toString().trim();
+                String pass=binding.loginUserPass.getText().toString().trim();
+                if (name.equals("mahmod")&&pass.equals("01144167167"))
+                {
+                    AdminModle adminModle=new AdminModle();
+                    adminModle.setAdmin_or_no(true);
+                    adminModle.setPassword(pass);
+                    adminModle.setName(name);
+                    MyPreference.SaveUserFirbas(adminModle);
+                    Navigation.findNavController(requireView()).navigate(R.id.action_loginScreen_to_homeAdminScreen);
 
-
-        viewModel.loginLiveData.observe(getViewLifecycleOwner(), new Observer<NetworkState>() {
-            @Override
-            public void onChanged(NetworkState networkState) {
-
-                switch (networkState.status) {
-                    case SUCCESS:
-
-                        MyPreference.saveUser((UserData) networkState.data);
-                        Log.d("dddddddddd", "onChanged: token " + networkState.data);
-                        LoadingDialog.hideDialog();
-                        Navigation.findNavController(getView()).navigate(R.id.action_loginScreen_to_homeAdminScreen);
-                        break;
-                    case FAILED:
-                        LoadingDialog.hideDialog();
-                        Toast.makeText(getContext(), ""+networkState.message, Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        LoadingDialog.showDialog(getActivity());
-                        break;
                 }
+                else
+                {
+                    final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+                    Query queryToGetData = dbRef.child("admin")
+                            .orderByChild("name").equalTo(name);
+                    queryToGetData.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    if(pass.equals(  appleSnapshot.child("password").getValue().toString()))
+                                    {
+                                        Toast.makeText(getContext(), "تم تسجيل الدخول بنجاح", Toast.LENGTH_SHORT).show();
+                                        AdminModle adminModle=new AdminModle();
+                                        adminModle.setAdmin_or_no(false);
+                                        adminModle.setPassword(pass);
+                                        adminModle.setName(name);
+                                        MyPreference.SaveUserFirbas(adminModle);
+                                        Navigation.findNavController(requireView()).navigate(R.id.action_loginScreen_to_homeAdminScreen);
+
+                                    }
+                                }
+                            }
+
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+
+                        }
+
+
+                    });
+
+                }
+                if(name.equals("") || pass.equals(""))
+                {
+                    Toast.makeText(getContext(), "يوجد نفس الببانات ", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+                //
             }
         });
+
 
 
     }
-
 }

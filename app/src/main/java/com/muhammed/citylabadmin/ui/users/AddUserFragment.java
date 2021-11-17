@@ -17,11 +17,21 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.muhammed.citylabadmin.HomeAdminScreen;
 import com.muhammed.citylabadmin.R;
+import com.muhammed.citylabadmin.data.model.admin.AdminModle;
 import com.muhammed.citylabadmin.data.model.login.UserData;
 import com.muhammed.citylabadmin.databinding.FragmentAddUserBinding;
+import com.muhammed.citylabadmin.databinding.FragmentAddnewAdminBinding;
 import com.muhammed.citylabadmin.databinding.FragmentLoginScreenBinding;
+import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.MyPreference;
 import com.muhammed.citylabadmin.helper.NetworkState;
@@ -35,10 +45,14 @@ public class AddUserFragment extends Fragment {
 
     private UserViewModel viewModel;
     private FragmentAddUserBinding binding;
-
+    private FragmentAddnewAdminBinding binding2;
+    DatabaseReference mDatabaseref;
+    FirebaseDatabase database;
     private String deviceToken ;
+
     public AddUserFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -52,38 +66,138 @@ public class AddUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_user, container, false);
+        if(HomeAdminScreen.stat==1) {
+            return inflater.inflate(R.layout.fragment_add_user, container, false);
+        }
+        else
+            return inflater.inflate(R.layout.fragment_addnew_admin, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding = FragmentAddUserBinding.bind(view);
-        viewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        database = FirebaseDatabase.getInstance();
+        mDatabaseref = database.getReference();
 
-        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            return;
+
+        if(HomeAdminScreen.stat==1) {
+            AllToken allToken=new AllToken(this.getContext());
+            allToken.SetnewToken();
+
+            binding = FragmentAddUserBinding.bind(view);
+            viewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+            FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull Task<String> task) {
+                            if (!task.isSuccessful()) {
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                            deviceToken = task.getResult();
+                            // Log and toast
                         }
+                    });
+            binding.addUserBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                        // Get new FCM registration token
-                        deviceToken = task.getResult();
-                        // Log and toast
-                    }
-                });
-        binding.addUserBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    addUser();
+                }
+            });
+            observe();
+        }
+        if(HomeAdminScreen.stat==0)
+        {
+            binding2 = FragmentAddnewAdminBinding.bind(view);
+            viewModel = new ViewModelProvider(this).get(UserViewModel.class);
+            binding2.addAdminBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                addUser();
-            }
-        });
-        observe();
+                    String name = binding2.newUserNameAdmin.getText().toString().trim();
+                    String phone = binding2.newUserPhonePassword.getText().toString().trim();
 
+                    if (!name.equals("") && !phone.equals("")) {
+                        AdminModle adminModle = new AdminModle();
+                        adminModle.setName(name);
+                        adminModle.setPassword(phone);
+
+
+
+                        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+                        Query queryToGetData = dbRef.child("admin")
+                                .orderByChild("name").equalTo(name);
+                        queryToGetData.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if(!dataSnapshot.exists()){
+                                    String userId = dbRef.child("phone").push().getKey();
+                                    dbRef.child("admin").child(userId).setValue(adminModle);
+                                    Toast.makeText(getContext(), "تم اضافة ", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                    {
+                                        Toast.makeText(getContext(), "يوجد نفس الببانات ", Toast.LENGTH_SHORT).show();
+
+                                    }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+
+
+                        });
+
+
+
+//                        mDatabaseref.child("admin").push().setValue(adminModle).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if (task.isSuccessful()) {
+//
+//                                    Toast.makeText(getContext(), "تم اضافة الموقع", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+                      }
+                    else
+                        Toast.makeText(getContext(), "برجاء اكمال البيانات", Toast.LENGTH_SHORT).show();
+                }
+            });
+            binding2.deletUserBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                    Query applesQuery = ref.child("admin").orderByChild("name").equalTo(binding2.newUserNameAdmin.getText().toString().trim())
+                            ;
+
+                    applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                appleSnapshot.getRef().removeValue();
+                            }
+                            Toast.makeText(getContext(), "تم مسح admin", Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
+            });
+
+
+
+
+
+        }
     }
 
     private void observe() {

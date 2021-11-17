@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,10 +31,12 @@ import android.widget.Toast;
 import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.base.BaseFragment;
 import com.muhammed.citylabadmin.databinding.FragmentSendUserResultScreenBinding;
+import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.FileData;
 import com.muhammed.citylabadmin.helper.ImageResizer;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.NetworkState;
+import com.muhammed.citylabadmin.helper.ResizJavaImage;
 import com.muhammed.citylabadmin.ui.adapter.result.ResultFileClickListener;
 import com.muhammed.citylabadmin.ui.adapter.result.ResultImageAdapter;
 
@@ -255,33 +258,17 @@ public class SendUserResultScreen extends BaseFragment
     private void onSelectFromGalleryResult(Intent data) {
         Bitmap bm;
         if (data != null) {
-//            Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),
-//                   data.getData());
-//
-//            Bitmap bitmap = bitmapOrg;
-//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//            byte[] imageInByte = stream.toByteArray();
-//            long lengthbmp = imageInByte.length;
-
-
-            //
             try {
 
-
-
-
+            //    bm=ResizJavaImage.decodeFile(data.getData().getPath());
                 bm = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), data.getData());
                 if (bytes == null)
                     bytes = new ByteArrayOutputStream();
                 bytes.reset();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, bytes);
                 String sImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
-                //add image to adapter
-                //    inputStream = requireContext().getContentResolver().openInputStream(data.getData());
-                Log.d("TAG", ": "+bm.getWidth()+"  "+bm.getHeight());
-                bm= ImageResizer.reduceBitmapSize(bm,  100000 );
-                Log.d("TAG", "onSelectFromGalleryResult: "+bm.getWidth()+"  "+bm.getHeight());
+
+
                 files.add(new FileData(bm, sImage));
                 adapter.addImage(files);
                 binding.ln2.setVisibility(View.GONE);
@@ -293,10 +280,13 @@ public class SendUserResultScreen extends BaseFragment
         }
     }
 
-    private void getBitMapFile(Bitmap bm) {
 
+
+    private static int getPowerOfTwoForSampleRatio(double ratio){
+        int k = Integer.highestOneBit((int)Math.floor(ratio));
+        if(k==0) return 1;
+        else return k;
     }
-
     private void onCaptureImageResult(Intent data) {
         if (data != null) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
@@ -321,6 +311,8 @@ public class SendUserResultScreen extends BaseFragment
     }
 
     private void observe() {
+        AllToken allToken=new AllToken(this.getContext());
+        allToken.SetnewToken();
         viewModel.sendResultLiveData.observe(getViewLifecycleOwner(), new Observer<NetworkState>() {
             @Override
             public void onChanged(NetworkState networkState) {
@@ -394,10 +386,10 @@ public class SendUserResultScreen extends BaseFragment
         }
 
         List<String> base64 = new ArrayList<>();
-        for (int i = 0; i < files.size(); i++)
+        for (int i = 0; i < files.size(); i++) {
             base64.add(files.get(i).getBase64());
-
-
+            Log.d("TAG", "sendResult: "+files.get(i).getBase64().length());
+        }
         viewModel.sendResult(base64, phone, note);
 
 

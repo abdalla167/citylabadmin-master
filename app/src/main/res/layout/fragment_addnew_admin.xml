@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.users.AddUserFragment"
+    android:paddingHorizontal="@dimen/_10sdp">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/user_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="@dimen/_150sdp"
+        android:maxWidth="@dimen/_200sdp"
+        android:src="@drawable/ic_send_offers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/g1"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/new_user_name_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/user_image"
+        android:padding="@dimen/_8sdp"
+        android:hint="@string/name"
+        android:gravity="right"
+        android:textColorHint="@color/dark_blue"
+        android:background="@drawable/background_edittext"
+        android:layout_marginVertical="@dimen/_50sdp"
+        android:drawableEnd="@drawable/ic_user"
+        app:drawableTint="@color/dark_blue"
+        android:drawablePadding="@dimen/_10sdp"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/new_user_phone_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/new_user_name_admin"
+        android:padding="@dimen/_8sdp"
+        android:hint="الرقم السري"
+        android:gravity="right"
+        android:textColorHint="@color/dark_blue"
+        android:background="@drawable/background_edittext"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:drawableEnd="@drawable/ic_phone"
+        app:drawableTint="@color/dark_blue"
+        android:drawablePadding="@dimen/_10sdp"
+        android:inputType="phone"
+        android:textAlignment="textEnd"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_admin_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/cairo_semibold"
+        android:paddingHorizontal="@dimen/_30sdp"
+        android:text="اضافه Admin"
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_user_phone_password"
+        app:layout_constraintVertical_bias="0.064" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/delet_user_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/cairo_semibold"
+        android:paddingHorizontal="@dimen/_30sdp"
+        android:text="ازاله Admin"
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_user_phone_password"
+        app:layout_constraintVertical_bias="0.053" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,11 @@
 package com.muhammed.citylabadmin.helper;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.util.Log;
+
+import java.io.IOException;
 
 public class ImageResizer {
     //For Image Size 640*480, use MAX_SIZE =  307200 as 640*480 307200
@@ -37,4 +41,7 @@ public class ImageResizer {
         int requiredWidth = (int) Math.round(bitmapWidth / ratio);
         return Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, true);
     }
+
+
+
 }

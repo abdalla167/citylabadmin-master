@@ -1,17 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-iid-interop:17.1.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/47667e918a11551545d712cf97c5602e/jetified-firebase-iid-interop-17.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/47667e918a11551545d712cf97c5602e/jetified-firebase-iid-interop-17.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/47667e918a11551545d712cf97c5602e/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/47667e918a11551545d712cf97c5602e/jetified-firebase-iid-interop-17.1.0/res" />
-      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/c3cf7672b8d08c720b63a95f0203f739/jetified-firebase-iid-interop-17.1.0/res" />
-      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/c6665f8627af9526ae6270f1ccc71f28/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/c6665f8627af9526ae6270f1ccc71f28/jetified-firebase-iid-interop-17.1.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/c6665f8627af9526ae6270f1ccc71f28/jetified-firebase-iid-interop-17.1.0/res" />
+      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/c6665f8627af9526ae6270f1ccc71f28/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-iid-interop/17.1.0/7fad4ae6f5c2016d5c7babbbf020b6ac08a9cb08/firebase-iid-interop-17.1.0-javadoc.jar!/" />
       <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-iid-interop/17.1.0/7fad4ae6f5c2016d5c7babbbf020b6ac08a9cb08/firebase-iid-interop-17.1.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />

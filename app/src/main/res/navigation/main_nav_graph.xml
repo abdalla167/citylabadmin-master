@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
+    app:defaultNavHost="true"
     app:startDestination="@id/loginScreen">
 
     <fragment
@@ -37,6 +38,9 @@
         <action
             android:id="@+id/action_homeAdminScreen_to_showalllocation"
             app:destination="@id/showalllocation" />
+        <action
+            android:id="@+id/action_homeAdminScreen_to_loginScreen"
+            app:destination="@id/loginScreen" />
 
 
     </fragment>

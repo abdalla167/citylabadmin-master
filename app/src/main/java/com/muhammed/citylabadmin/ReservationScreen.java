@@ -22,6 +22,7 @@ import com.muhammed.citylabadmin.data.model.reservation.Booking;
 import com.muhammed.citylabadmin.data.model.reservation.Datum;
 import com.muhammed.citylabadmin.data.model.user.User;
 import com.muhammed.citylabadmin.databinding.FragmentUsersScreenBinding;
+import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.NetworkState;
 import com.muhammed.citylabadmin.service.RetrofitService;
@@ -83,6 +84,8 @@ public class ReservationScreen extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //binding=FragmentUsersScreenBinding.bind(view);
+        AllToken allToken=new AllToken(this.getContext());
+        allToken.SetnewToken();
         recyclerView=view.findViewById(R.id.reservation_recycler);
         progressBar=view.findViewById(R.id.prograsssreservation);
         adapter=new ReservationAdapter(getContext(),retrofitService);

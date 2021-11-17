@@ -35,6 +35,7 @@ import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.data.model.user.User;
 import com.muhammed.citylabadmin.databinding.FragmentAddUserBinding;
 import com.muhammed.citylabadmin.databinding.FragmentUsersScreenBinding;
+import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.NetworkState;
 import com.muhammed.citylabadmin.ui.adapter.user.UserAdapter;
@@ -99,6 +100,8 @@ public class UsersScreen extends Fragment implements UserClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding=FragmentUsersScreenBinding.bind(view);
+        AllToken allToken=new AllToken(this.getContext());
+        allToken.SetnewToken();
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         initRecycler();
         userViewModel.getAllUsers();

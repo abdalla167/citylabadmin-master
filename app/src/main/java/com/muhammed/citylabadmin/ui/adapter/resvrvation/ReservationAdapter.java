@@ -40,6 +40,7 @@ import com.muhammed.citylabadmin.data.model.reservation.Booking;
 import com.muhammed.citylabadmin.data.model.reservation.Datum;
 import com.muhammed.citylabadmin.data.model.user.User;
 import com.muhammed.citylabadmin.di.RetrofitClint;
+import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.FileData;
 import com.muhammed.citylabadmin.helper.MyPreference;
 import com.muhammed.citylabadmin.service.RetrofitService;
@@ -216,7 +217,8 @@ ConstraintLayout linearLayout;
 
 
                     imageView_delete.setEnabled(false);
-
+                    AllToken allToken=new AllToken(context);
+                    allToken.SetnewToken();
                     RetrofitClint.getInstance().delete_reservation(MyPreference.getSharedString(MyPreference.SHARED_USER_TOKEN),
                             reserv.get(getAdapterPosition()).getmReservationId()).enqueue(new Callback<SimpleResponse>() {
                         @Override

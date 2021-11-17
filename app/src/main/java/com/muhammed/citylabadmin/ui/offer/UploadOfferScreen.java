@@ -36,6 +36,7 @@ import com.muhammed.citylabadmin.data.model.offer.Datum;
 import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
 import com.muhammed.citylabadmin.databinding.FragmentUploadOfferScreenBinding;
 import com.muhammed.citylabadmin.di.RetrofitClint;
+import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.MyPreference;
 import com.muhammed.citylabadmin.helper.NetworkState;
@@ -483,7 +484,8 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                     file.add(imageBase64);
                     datum.setFiles(file);
 
-
+                    AllToken allToken=new AllToken(this.getContext());
+                    allToken.SetnewToken();
 
                     RetrofitClint.getInstance().
                             updateOffer(MyPreference.getSharedString(MyPreference.SHARED_USER_TOKEN),Integer.parseInt(String.valueOf(datum.getOfferId())),
@@ -504,6 +506,8 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                 }
                 else {
                     SplashScreen.stat=0;
+                    AllToken allToken=new AllToken(this.getContext());
+                    allToken.SetnewToken();
                     viewModel.addOffer(imageBase64, title, desc, startDate, endDate,
                             Double.parseDouble(startPrice), Double.parseDouble(endPrice));
                 }

@@ -1,17 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.gms:play-services-measurement-api:19.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/834a221ad5581c50f72122f520801d5e/jetified-play-services-measurement-api-19.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/834a221ad5581c50f72122f520801d5e/jetified-play-services-measurement-api-19.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/834a221ad5581c50f72122f520801d5e/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/834a221ad5581c50f72122f520801d5e/jetified-play-services-measurement-api-19.0.0/res" />
-      <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/61f2f1948f20d281c192b9480d2b4671/jetified-play-services-measurement-api-19.0.0/res" />
+      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0341e1ee5502b56415284311faed1065/jetified-play-services-measurement-api-19.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0341e1ee5502b56415284311faed1065/jetified-play-services-measurement-api-19.0.0/res" />
       <root url="file://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0341e1ee5502b56415284311faed1065/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/transforms-2/files-2.1/0341e1ee5502b56415284311faed1065/jetified-play-services-measurement-api-19.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-measurement-api/19.0.0/96ca3a78e54874a350bd808e9f407fc7a7ea93/play-services-measurement-api-19.0.0-javadoc.jar!/" />
       <root url="jar://$USER_HOME$/AndroidStudioProjects/citylab/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-measurement-api/19.0.0/96ca3a78e54874a350bd808e9f407fc7a7ea93/play-services-measurement-api-19.0.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />

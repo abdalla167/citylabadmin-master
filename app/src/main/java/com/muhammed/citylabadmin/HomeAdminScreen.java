@@ -18,15 +18,17 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.Space;
+import android.widget.Toast;
 
 import com.muhammed.citylabadmin.databinding.FragmentHomeAdminScreenBinding;
 import com.muhammed.citylabadmin.databinding.FragmentLoginScreenBinding;
+import com.muhammed.citylabadmin.helper.MyPreference;
 
 public class HomeAdminScreen extends Fragment {
 
 
     private FragmentHomeAdminScreenBinding binding;
-
+    public static int stat;
     private NavController navController;
 
     public HomeAdminScreen() {
@@ -61,14 +63,12 @@ public class HomeAdminScreen extends Fragment {
         splash.startAnimation(animation);
 
 
-
         Animation animation2 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
         animation2.setInterpolator(new LinearInterpolator());
         animation2.setRepeatCount(Animation.INFINITE);
         animation2.setDuration(1100);
         final CardView splash2 = view.findViewById(R.id.send_offers_item);
         splash2.startAnimation(animation2);
-
 
 
         Animation animation3 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
@@ -79,16 +79,12 @@ public class HomeAdminScreen extends Fragment {
         splash3.startAnimation(animation3);
 
 
-
-
         Animation animation4 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
         animation4.setInterpolator(new LinearInterpolator());
         animation4.setRepeatCount(Animation.INFINITE);
         animation4.setDuration(1300);
         final CardView splash4 = view.findViewById(R.id.show_users_item);
         splash4.startAnimation(animation4);
-
-
 
 
         Animation animation5 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
@@ -99,19 +95,18 @@ public class HomeAdminScreen extends Fragment {
         splash5.startAnimation(animation5);
 
 
+        binding.uploadmedical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeAdminScreen_to_fragment_medical_information);
 
-binding.uploadmedical.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        navController.navigate(R.id.action_homeAdminScreen_to_fragment_medical_information);
-
-    }
-});
+            }
+        });
 
         binding.sendOffersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SplashScreen.stat=0;
+                SplashScreen.stat = 0;
                 navController.navigate(R.id.action_homeAdminScreen_to_uploadOfferScreen);
 
             }
@@ -135,21 +130,23 @@ binding.uploadmedical.setOnClickListener(new View.OnClickListener() {
         binding.addUserItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                stat=1;
                 navController.navigate(R.id.action_homeAdminScreen_to_addUserFragment);
+
             }
         });
-binding.updateOffer.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-navController.navigate(R.id.action_homeAdminScreen_to_updateOfferScreen);
-    }
-});
+
 
         binding.showUsersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_homeAdminScreen_to_usersScreen);
+            }
+        });
+        binding.updateOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeAdminScreen_to_updateOfferScreen);
             }
         });
 
@@ -158,6 +155,31 @@ navController.navigate(R.id.action_homeAdminScreen_to_updateOfferScreen);
             public void onClick(View v) {
                 navController.navigate(R.id.action_homeAdminScreen_to_showalllocation);
 
+            }
+        });
+        binding.addnewadmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (MyPreference.GetdataAdmin().isAdmin_or_no()==true)
+                {
+                    //binding.addnewadmin.setVisibility(View.INVISIBLE);
+                    stat=0;
+                    navController.navigate(R.id.action_homeAdminScreen_to_addUserFragment);
+                }
+else
+                {
+                    Toast.makeText(getContext(), "غير مسموح", Toast.LENGTH_SHORT).show();
+                    binding.addnewadmin.setEnabled(false);
+                }
+
+            }
+        });
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyPreference.Logout();
+                navController.navigate(R.id.action_homeAdminScreen_to_loginScreen);
             }
         });
     }

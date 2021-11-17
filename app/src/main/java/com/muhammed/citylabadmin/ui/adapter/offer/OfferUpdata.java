@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.data.model.offer.AllOffer;
 import com.muhammed.citylabadmin.data.model.general.SimpleResponse;
 import com.muhammed.citylabadmin.di.RetrofitClint;
+import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.MyPreference;
 
 import retrofit2.Call;
@@ -54,6 +56,10 @@ public class OfferUpdata extends RecyclerView.Adapter<OfferUpdata.OfferUpdatahol
             public void onClick(View v) {
                 holder.delet.setEnabled(false);
 
+                AllToken allToken=new AllToken(context);
+                allToken.SetnewToken();
+                Toast.makeText(context, "الرجاء الانتظار", Toast.LENGTH_SHORT).show();
+
                 RetrofitClint.getInstance().delete_offer(MyPreference.getSharedString(MyPreference.SHARED_USER_TOKEN),Integer.parseInt(String.valueOf(allOffers.getData().get(position).getOfferId()))).enqueue(new Callback<SimpleResponse>() {
                     @Override
                     public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
@@ -67,6 +73,8 @@ public class OfferUpdata extends RecyclerView.Adapter<OfferUpdata.OfferUpdatahol
 
                     }
                 });
+                Toast.makeText(context, "تم المسح", Toast.LENGTH_SHORT).show();
+
                 holder.delet.setEnabled(true);
             }
         });
