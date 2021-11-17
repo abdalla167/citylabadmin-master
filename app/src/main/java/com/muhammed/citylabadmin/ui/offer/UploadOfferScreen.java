@@ -29,6 +29,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.model.Image;
 import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.SplashScreen;
 import com.muhammed.citylabadmin.base.BaseFragment;
@@ -40,6 +42,7 @@ import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.MyPreference;
 import com.muhammed.citylabadmin.helper.NetworkState;
+import com.muhammed.citylabadmin.helper.ResizJavaImage;
 import com.muhammed.citylabadmin.helper.Utile;
 
 import java.io.ByteArrayOutputStream;
@@ -74,6 +77,7 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
     public Datum datum=new Datum();
     InputStream inputStream;
     ByteArrayOutputStream bytes;
+    private List<Image> images;
     String startDateOfferUpdate;
     String endDateOfferUpdate;
     final Calendar myCalendar = Calendar.getInstance();
@@ -363,30 +367,23 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (data.getData() != null) {
-                try {
-                    inputStream = getActivity().getContentResolver().openInputStream(data.getData());
+        if (data != null) {
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
+            images  = ImagePicker.getImages(data);
             if (requestCode == REQUEST_GALLERY_CODE)
-                onSelectFromGalleryResult(data);
+                onSelectFromGalleryResult(images.get(0));
             else if (requestCode == REQUEST_CAMERA_CODE)
-                onCaptureImageResult(data);
+                onCaptureImageResult(images.get(0));
 
         }
     }
 
 
-    private void onSelectFromGalleryResult(Intent data) {
+    private void onSelectFromGalleryResult(Image data) {
         Bitmap bm;
         if (data != null) {
             try {
-                bm = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), data.getData());
+                bm = ResizJavaImage.decodeFile(data.getPath());
                 if (bytes == null)
                     bytes = new ByteArrayOutputStream();
                 bytes.reset();
@@ -397,7 +394,7 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
                 binding.offerImage.setImageBitmap(bm);
                 binding.removeIcon.setVisibility(View.VISIBLE);
                 //  inputStream = requireContext().getContentResolver().openInputStream(data.getData());
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -405,9 +402,9 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
 
 
 
-    private void onCaptureImageResult(Intent data) {
+    private void onCaptureImageResult(Image data) {
         if (data != null) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            Bitmap thumbnail = ResizJavaImage.decodeFile(data.getPath());
             bytes = new ByteArrayOutputStream();
             if (bytes == null)
                 bytes = new ByteArrayOutputStream();

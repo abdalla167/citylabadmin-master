@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -17,9 +18,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.esafirm.imagepicker.features.ImagePicker;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -33,6 +37,7 @@ public class BaseFragment extends Fragment {
     private static final int PDF_REQUEST_CODE =103 ;
 
     //storage data
+
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_CAMERA = 122;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_GALLERY = 123;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PDF = 124;
@@ -43,17 +48,20 @@ public class BaseFragment extends Fragment {
 
     public void cameraIntent() {
         if (checkStoragePermission(MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_CAMERA)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, REQUEST_CAMERA_CODE);
+            ImagePicker.cameraOnly().start(this ,REQUEST_CAMERA_CODE);
+//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            startActivityForResult(intent, REQUEST_CAMERA_CODE);
         }
     }
 
     public void galleryIntent() {
         if (checkStoragePermission(MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_GALLERY)) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);//
-            startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_GALLERY_CODE);
+
+            ImagePicker.create(this).showCamera(false).start(REQUEST_GALLERY_CODE);
+//            Intent intent = new Intent();
+//            intent.setType("image/*");
+//            intent.setAction(Intent.ACTION_GET_CONTENT);//
+//            startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_GALLERY_CODE);
         }
     }
 

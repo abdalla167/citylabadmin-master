@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MedicalInformationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="5.5"
+        android:gravity="center|top"
+        >
+
+        <ImageView
+            android:id="@+id/add_information_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.2"
+            android:src="@drawable/ic_camera"
+            />
+
+        <EditText
+            android:id="@+id/hid_lin_infor"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10ssp"
+            android:background="@drawable/background_edittext"
+            android:fontFamily="@font/cairo_semibold"
+            android:hint="اضافه عنوان"
+            android:paddingRight="@dimen/_15sdp"
+            android:textColor="#000"
+            android:textSize="@dimen/_13sdp"
+            android:textDirection="rtl"
+
+
+
+            />
+
+        <EditText
+            android:id="@+id/content_medical_information"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.7"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:background="@drawable/background_edittext"
+            android:fontFamily="@font/cairo_semibold"
+            android:hint="اضافه المحتواي"
+            android:paddingRight="@dimen/_15sdp"
+            android:textColor="#000"
+            android:textSize="@dimen/_10sdp"
+            android:textDirection="rtl"
+android:gravity="center|top|right"
+            />
+
+        <Button
+            android:id="@+id/upload_information"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="تحميل"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.4"
+            android:background="@drawable/background_edittext"
+            />
+        <ProgressBar
+            android:id="@+id/progressbiggroupid"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:layout_alignParentStart="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.733" />
+    </LinearLayout>
+
+</FrameLayout>

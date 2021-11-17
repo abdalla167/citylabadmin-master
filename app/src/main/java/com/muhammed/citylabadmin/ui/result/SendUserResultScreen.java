@@ -28,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.model.Image;
 import com.muhammed.citylabadmin.R;
 import com.muhammed.citylabadmin.base.BaseFragment;
 import com.muhammed.citylabadmin.databinding.FragmentSendUserResultScreenBinding;
@@ -60,7 +62,7 @@ public class SendUserResultScreen extends BaseFragment
     private FragmentSendUserResultScreenBinding binding;
     private ResultViewModel viewModel;
 
-
+    private List<Image> images ;
     InputStream inputStream;
     ByteArrayOutputStream bytes;
 
@@ -213,19 +215,13 @@ public class SendUserResultScreen extends BaseFragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && data != null) {
-            if (data.getData() != null) {
-                try {
-                    inputStream = getActivity().getContentResolver()
-                            .openInputStream(data.getData());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+           images = ImagePicker.getImages(data);
+
 
             if (requestCode == REQUEST_GALLERY_CODE)
-                onSelectFromGalleryResult(data);
+                onSelectFromGalleryResult(images);
             else if (requestCode == REQUEST_CAMERA_CODE)
-                onCaptureImageResult(data);
+                onCaptureImageResult(images.get(0));
             else
                 onPdfSelected(data);
 
@@ -255,26 +251,30 @@ public class SendUserResultScreen extends BaseFragment
 
     }
 
-    private void onSelectFromGalleryResult(Intent data) {
+    private void onSelectFromGalleryResult(List<Image> data) {
         Bitmap bm;
         if (data != null) {
             try {
 
             //    bm=ResizJavaImage.decodeFile(data.getData().getPath());
-                bm = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), data.getData());
-                if (bytes == null)
-                    bytes = new ByteArrayOutputStream();
-                bytes.reset();
-                bm.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-                String sImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
+                for (Image image : data) {
+                    bm = ResizJavaImage.decodeFile(image.getPath());
+                    if (bytes == null)
+                        bytes = new ByteArrayOutputStream();
+                    bytes.reset();
 
+                    bm.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+                    String sImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
 
-                files.add(new FileData(bm, sImage));
-                adapter.addImage(files);
+                    Log.d("TAG", "onSelectFromGalleryResult: " + bm.getWidth() + " " + bm.getHeight());
+                    files.add(new FileData(bm, sImage));
+                    adapter.addImage(files);
+                }
                 binding.ln2.setVisibility(View.GONE);
                 binding.uploadImageBtn.setText(getResources().getString(R.string.add));
 
-            } catch (IOException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -287,9 +287,9 @@ public class SendUserResultScreen extends BaseFragment
         if(k==0) return 1;
         else return k;
     }
-    private void onCaptureImageResult(Intent data) {
+    private void onCaptureImageResult(Image data) {
         if (data != null) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            Bitmap thumbnail = ResizJavaImage.decodeFile(data.getPath());
             if (bytes == null)
                 bytes = new ByteArrayOutputStream();
             bytes.reset();
