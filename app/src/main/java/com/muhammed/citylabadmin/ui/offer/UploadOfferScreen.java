@@ -380,24 +380,24 @@ public class UploadOfferScreen extends BaseFragment implements PopupMenu.OnMenuI
 
 
     private void onSelectFromGalleryResult(Image data) {
-        Bitmap bm;
-        if (data != null) {
-            try {
-                bm = ResizJavaImage.decodeFile(data.getPath());
-                if (bytes == null)
-                    bytes = new ByteArrayOutputStream();
-                bytes.reset();
+            Bitmap bm;
+            if (data != null) {
+                try {
+                    bm = ResizJavaImage.decodeFile(data.getPath());
+                    if (bytes == null)
+                        bytes = new ByteArrayOutputStream();
+                    bytes.reset();
 
-                bm.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-                imageBase64 = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
+                    bm.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+                    imageBase64 = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT).trim();
 
-                binding.offerImage.setImageBitmap(bm);
-                binding.removeIcon.setVisibility(View.VISIBLE);
-                //  inputStream = requireContext().getContentResolver().openInputStream(data.getData());
-            } catch (Exception e) {
-                e.printStackTrace();
+                    binding.offerImage.setImageBitmap(bm);
+                    binding.removeIcon.setVisibility(View.VISIBLE);
+                    //  inputStream = requireContext().getContentResolver().openInputStream(data.getData());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
     }
 
 

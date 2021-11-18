@@ -46,6 +46,7 @@ import com.muhammed.citylabadmin.helper.MyPreference;
 import com.muhammed.citylabadmin.service.RetrofitService;
 import com.muhammed.citylabadmin.ui.adapter.result.ResultFileClickListener;
 import com.muhammed.citylabadmin.ui.adapter.result.ResultImageAdapter;
+import com.ortiz.touchview.TouchImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,8 +136,8 @@ public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter
     }
 
     public  class ReservationHolder extends RecyclerView.ViewHolder {
-
-            ImageView image_test,imageView_delete,dowenload;
+TouchImageView image_test;
+            ImageView imageView_delete,dowenload;
             TextView name,age,phone,date,address,type;
 ConstraintLayout linearLayout;
         public ReservationHolder(@NonNull View itemView) {
