@@ -1,6 +1,8 @@
 package com.muhammed.citylabadmin.ui.login;
 
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -60,6 +62,7 @@ public class LoginViewModel extends ViewModel {
                     public void onError(@NonNull Throwable e) {
 
                         _loginLiveData.postValue(NetworkState.getErrorMessage(e));
+                        Log.d("TAG", "onError: "+e.getMessage());
 
 
                     }

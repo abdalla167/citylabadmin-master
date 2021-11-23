@@ -88,7 +88,6 @@ public class SplashScreen extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             {
-
                                                 startActivity(new Intent(SplashScreen.this, MainActivity.class));
                                                 finish();
                                             }

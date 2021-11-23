@@ -140,6 +140,7 @@ public class HomeAdminScreen extends Fragment {
         binding.showUsersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stat=1;
                 navController.navigate(R.id.action_homeAdminScreen_to_usersScreen);
             }
         });
@@ -155,6 +156,22 @@ public class HomeAdminScreen extends Fragment {
             public void onClick(View v) {
                 navController.navigate(R.id.action_homeAdminScreen_to_showalllocation);
 
+            }
+        });
+        binding.deleteadminlisthomescreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MyPreference.GetdataAdmin().isAdmin_or_no()==true)
+                {
+                    //binding.addnewadmin.setVisibility(View.INVISIBLE);
+                    stat=0;
+                    navController.navigate(R.id.action_homeAdminScreen_to_usersScreen);
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "غير مسموح", Toast.LENGTH_SHORT).show();
+                    binding.addnewadmin.setEnabled(false);
+                }
             }
         });
         binding.addnewadmin.setOnClickListener(new View.OnClickListener() {

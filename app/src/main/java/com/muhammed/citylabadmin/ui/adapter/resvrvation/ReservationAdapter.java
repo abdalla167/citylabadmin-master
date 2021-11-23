@@ -58,7 +58,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter.ReservationHolder> {
+public class ReservationAdapter  extends RecyclerView.Adapter<ReservationAdapter.ReservationHolder>
+{
     float scaletr=1.0f;
     ScaleGestureDetector saScaleGestureDetector;
     ImageView imaged;
@@ -151,8 +152,8 @@ ConstraintLayout linearLayout;
                 address=itemView.findViewById(R.id.address_id_user_reservation);
                 type=itemView.findViewById(R.id.type_id_user_reservation);
                 dowenload=itemView.findViewById(R.id.downloadImage);
-            imageView_delete=itemView.findViewById(R.id.remove_icon_reservation);
-            image_test.setOnClickListener(new View.OnClickListener() {
+                imageView_delete=itemView.findViewById(R.id.remove_icon_reservation);
+                image_test.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final Dialog dialog = new Dialog(context);

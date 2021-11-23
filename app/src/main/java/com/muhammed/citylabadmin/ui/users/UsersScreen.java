@@ -31,13 +31,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.muhammed.citylabadmin.HomeAdminScreen;
 import com.muhammed.citylabadmin.R;
+import com.muhammed.citylabadmin.data.model.admin.AdminModle;
 import com.muhammed.citylabadmin.data.model.user.User;
 import com.muhammed.citylabadmin.databinding.FragmentAddUserBinding;
 import com.muhammed.citylabadmin.databinding.FragmentUsersScreenBinding;
 import com.muhammed.citylabadmin.helper.AllToken;
 import com.muhammed.citylabadmin.helper.LoadingDialog;
 import com.muhammed.citylabadmin.helper.NetworkState;
+import com.muhammed.citylabadmin.ui.adapter.user.AdminAdapter;
 import com.muhammed.citylabadmin.ui.adapter.user.UserAdapter;
 import com.muhammed.citylabadmin.ui.adapter.user.UserClickListener;
 import com.muhammed.citylabadmin.ui.users.UserViewModel;
@@ -54,6 +62,8 @@ public class UsersScreen extends Fragment implements UserClickListener {
 
     Context context;
     public List<User> all_user= new ArrayList<>();
+    public ArrayList<AdminModle>adminModles=new ArrayList<>();
+    public AdminModle adminModle=new AdminModle();
     private static final int REQUEST_RUNTIME_PERMISSION = 123;
     String[] permissons = {Manifest.permission.READ_CONTACTS,
             Manifest.permission.WRITE_CONTACTS,
@@ -65,6 +75,7 @@ public class UsersScreen extends Fragment implements UserClickListener {
 
 
     private UserAdapter adapter ;
+    public AdminAdapter adminAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
 
@@ -92,36 +103,84 @@ public class UsersScreen extends Fragment implements UserClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_users_screen, container, false);
+
+            return inflater.inflate(R.layout.fragment_users_screen, container, false);
+
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding=FragmentUsersScreenBinding.bind(view);
-        AllToken allToken=new AllToken(this.getContext());
-        allToken.SetnewToken();
-        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
-        initRecycler();
-        userViewModel.getAllUsers();
-        observe();
 
-        binding.editTextSearch.addTextChangedListener(new TextWatcher() {
+if (HomeAdminScreen.stat==1) {
+    AllToken allToken = new AllToken(this.getContext());
+    allToken.SetnewToken();
+    binding.editTextSearch.setVisibility(View.VISIBLE);
+
+    userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    initRecycler();
+    userViewModel.getAllUsers();
+    observe();
+
+    binding.editTextSearch.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            filter(s.toString());
+
+        }
+    });
+}
+if(HomeAdminScreen.stat==0)
+{
+
+    binding.editTextSearch.setVisibility(View.GONE);
+getdata();
+
+
+}
+    }
+
+    public void getdata()
+    {
+
+        final DatabaseReference nm = FirebaseDatabase.getInstance().getReference("admin");
+        nm.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot npsnapshot : dataSnapshot.getChildren()) {
+                        adminModle=npsnapshot.getValue(AdminModle.class);
+                      adminModles.add(adminModle);
+                    }
+                    adminAdapter=new AdminAdapter(getContext(),adminModles);
+                    layoutManager=new LinearLayoutManager(requireContext());
+                    binding.usersRecycler.setLayoutManager(layoutManager);
+                    binding.usersRecycler.setAdapter(adminAdapter);
+                }
+                else
+                {
 
+                }
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                filter(s.toString());
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), ""+error, Toast.LENGTH_SHORT).show();
 
             }
+
+
         });
     }
 
@@ -192,4 +251,6 @@ public class UsersScreen extends Fragment implements UserClickListener {
         Navigation.findNavController(getView()).
                 navigate(R.id.action_usersScreen_to_sendUserResultScreen,bundle);
     }
+
+
 }

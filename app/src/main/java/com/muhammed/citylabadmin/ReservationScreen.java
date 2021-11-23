@@ -96,9 +96,13 @@ public class ReservationScreen extends Fragment {
             public void onChanged(Booking booking) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 List<Datum>data=new ArrayList<>();
-                data=booking.getData().subList(7,booking.getData().size());
-                adapter.addreserv(data);
-                recyclerView.setAdapter(adapter);
+                if(booking !=null && booking.getData() !=null) {
+                    if (booking.getData().size() > 0) {
+                        data = booking.getData().subList(7, booking.getData().size());
+                        adapter.addreserv(data);
+                        recyclerView.setAdapter(adapter);
+                    }
+                }
             }
         });
 
